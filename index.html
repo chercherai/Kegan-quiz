@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kegan Stages Questionnaire</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            max-width: 800px;
+            margin: auto;
+        }
+        .question {
+            margin-bottom: 15px;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #f0f0f0;
+            border: 1px solid #ddd;
+        }
+    </style>
+</head>
+<body>
+    <h1>Kegan Stages Self-Assessment</h1>
+    <form id="keganQuestionnaire">
+        <!-- Questions will be inserted here by JavaScript -->
+        <button type="submit">Submit</button>
+    </form>
+    <div class="result" id="result" style="display: none;"></div>
+
+    <script>
+        // Define the questions and choices
+      const questions = [
+    {
+        text: "I often act on impulse when something excites or upsets me.",
+        stageAlign: ['A', 'B']
+    },
+    {
+        text: "My decisions are mostly based on what I want or need at the moment.",
+        stageAlign: ['A', 'B']
+    },
+    {
+        text: "I feel best when I'm doing things that are approved of by the people I care about.",
+        stageAlign: ['A', 'B']
+    },
+    {
+        text: "I prioritize doing what I believe is right, even if others disagree.",
+        stageAlign: ['A', 'B']
+    },
+    {
+        text: "I see the world mostly from my own perspective.",
+        stageAlign: ['A', 'B']
+    },
+        {
+    text: "I try to understand the world from multiple perspectives, not just my own.",
+    stageAlign: ['A', 'B']
+},
+{
+    text: "I find it difficult to identify what I truly believe when there are conflicting opinions.",
+    stageAlign: ['A', 'B']
+},
+{
+    text: "Relationships are mainly about what others can provide for me.",
+    stageAlign: ['A', 'B']
+},
+{
+    text: "I define success by external achievements and recognition.",
+    stageAlign: ['A', 'B']
+},
+{
+    text: "I often change my opinions based on popular trends or peer pressure.",
+    stageAlign: ['A', 'B']
+},
+        {
+    text: "I struggle with seeing things from others' points of view without losing my own.",
+    stageAlign: ['A', 'B']
+},
+{
+    text: "I am mostly focused on my own needs and desires.",
+    stageAlign: ['A', 'B']
+},
+{
+    text: "I feel defined by the roles I play in my family, work, or social circles.",
+    stageAlign: ['A', 'B']
+},
+{
+    text: "My sense of worth comes from others' approval and acceptance.",
+    stageAlign: ['A', 'B']
+},
+{
+    text: "I find it hard to make decisions without seeking advice from others.",
+    stageAlign: ['A', 'B']
+},
+        {
+    text: "I see rules and regulations as fixed guidelines that must be followed.",
+    stageAlign: ['A', 'B']
+},
+{
+    text: "I often look to authorities or experts to tell me what is right or wrong.",
+    stageAlign: ['A', 'B']
+},
+{
+    text: "I am uncomfortable with ambiguity and uncertainty.",
+    stageAlign: ['A', 'B']
+},
+{
+    text: "I prefer clear, straightforward solutions to problems.",
+    stageAlign: ['A', 'B']
+},
+{
+    text: "My identity and beliefs are strongly influenced by the groups I belong to.",
+    stageAlign: ['A', 'B']
+},
+        {
+    text: "I usually reflect on the consequences of my actions before I take them.",
+    stageAlign: ['A', 'B']
+},
+{
+    text: "My decisions are influenced by considering how they affect others around me.",
+    stageAlign: ['A', 'B']
+},
+{
+    text: "I prioritize doing what I believe is right, even if others disagree.",
+    stageAlign: ['A', 'B']
+},
+{
+    text: "I have a clear set of values and beliefs that guide my actions, regardless of others' expectations.",
+    stageAlign: ['A', 'B']
+},
+{
+    text: "I try to understand the world from multiple perspectives, not just my own.",
+    stageAlign: ['A', 'B']
+},
+        {
+    text: "I can hold onto my beliefs even when others have differing opinions.",
+    stageAlign: ['A', 'B']
+},
+{
+    text: "Relationships are about mutual growth and understanding.",
+    stageAlign: ['A', 'B']
+},
+{
+    text: "I define success by personal growth and self-defined goals.",
+    stageAlign: ['A', 'B']
+},
+{
+    text: "My opinions are rooted in a deeper understanding of who I am and what I value.",
+    stageAlign: ['A', 'B']
+},
+{
+    text: "I can empathize with others while maintaining my own perspective.",
+    stageAlign: ['A', 'B']
+},
+        {
+    text: "I consider the collective needs and desires of the group or community.",
+    stageAlign: ['A', 'B']
+},
+{
+    text: "I have a sense of self that goes beyond the roles I play in different areas of my life.",
+    stageAlign: ['A', 'B']
+},
+{
+    text: "My sense of worth comes from living according to my values and principles.",
+    stageAlign: ['A', 'B']
+},
+{
+    text: "I can make decisions based on my internal compass, even if I consult others for their viewpoints.",
+    stageAlign: ['A', 'B']
+},
+{
+    text: "I see rules and regulations as frameworks that can be interpreted and adapted.",
+    stageAlign: ['A', 'B']
+},
+        {
+    text: "I critically evaluate expert opinions and decide what I believe is right or wrong.",
+    stageAlign: ['A', 'B']
+},
+{
+    text: "I am comfortable navigating ambiguity and uncertainty, recognizing they are part of life.",
+    stageAlign: ['A', 'B']
+},
+{
+    text: "I appreciate the complexity of problems and look for nuanced solutions.",
+    stageAlign: ['A', 'B']
+},
+{
+    text: "I am energized by considering different perspectives and opinions.",
+    stageAlign: ['A', 'B']
+},
+{
+    text: "My identity and beliefs are self-authored, though informed by the groups I interact with.",
+    stageAlign: ['A', 'B']
+}
+];
+
+      
+
+        const form = document.getElementById('keganQuestionnaire');
+        const resultDiv = document.getElementById('result');
+
+        // Dynamically create questionnaire
+        questions.forEach((question, index) => {
+            const questionDiv = document.createElement('div');
+            questionDiv.className = 'question';
+            questionDiv.innerHTML = `<label>${index + 1}. ${question.text}</label><br>
+                                     <input type="radio" name="q${index}" value="A"> A<br>
+                                     <input type="radio" name="q${index}" value="B"> B`;
+            form.insertBefore(questionDiv, form.lastElementChild);
+        });
+
+form.addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    let score = 0;
+    
+    // Calculate score
+    questions.forEach((_, index) => {
+        const choice = form.querySelector(`input[name="q${index}"]:checked`);
+        if (choice && choice.value === 'B') {
+            score += 1; // B answers count for 1
+        }
+    });
+
+    // Interpret score
+    let interpretation = interpretScore(score);
+
+    // Display results
+    resultDiv.innerHTML = `<strong>Your Assessment Results:</strong><p>${interpretation}</p>`;
+    resultDiv.style.display = 'block';
+});
+
+function interpretScore(score) {
+    // Interpret the score based on the total number of B responses
+    if (score >= 16) {
+        return "Your responses suggest a strong alignment with the Self-Transforming Mind (Stage 5), showing a high level of psychological development where you can hold multiple perspectives and understand the limitations of any single ideology.";
+    } else if (score >= 11) {
+        return "You likely align with the Self-Authoring Mind (Stage 4), demonstrating an ability to form your own ideology, identity, and relationships beyond the expectations of others.";
+    } else if (score >= 6) {
+        return "Your responses indicate a tendency towards the Socialized Mind (Stage 3), where your sense of self is influenced significantly by the expectations and evaluations of others around you.";
+    } else if (score >= 3) {
+        return "You might be transitioning from the Imperial Mind (Stage 2) towards the Socialized Mind (Stage 3), beginning to consider others' needs alongside your own.";
+    } else {
+        return "Your responses suggest a closer alignment with the Imperial Mind (Stage 2), focusing primarily on your own needs and desires.";
+    }
+};
+
+            // Display results
+            resultDiv.innerHTML = `<strong>Your Assessment Results:</strong><p>${interpretation}</p>`;
+            resultDiv.style.display = 'block';
+        });
+    </script>
+</body>
+</html>
